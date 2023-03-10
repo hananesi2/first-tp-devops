@@ -27,7 +27,7 @@ jobs:
     #validation of the quality of the code using pylint and generate a report
     - name: Pylint code validation
       run: |
-        python -m pip install pylint
+        python -m pip install pylint --verbose
         pylint calculator.py test_calculator.py --output-format=json > pylint_report.json
 
 
