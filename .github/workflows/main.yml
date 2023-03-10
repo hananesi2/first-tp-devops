@@ -1,14 +1,11 @@
 name: My Python Workflow
-
 on: [push]
-
 
 jobs:
   build:
     runs-on: windows-latest
     #build runtime limit:FIRST STEP
     timeout-minutes: 15
-
 
     steps:
     #Install The Programming Language Python
