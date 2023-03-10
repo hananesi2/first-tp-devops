@@ -26,7 +26,9 @@ jobs:
         pip install -r requirements.txt
     #validation of the quality of the code using pylint and generate a report
     - name: Pylint code validation
-      run: pylint calculator.py test_calculator.py --output-format=json > pylint_report.json
+      run: |
+        python -m pip install pylint
+        pylint calculator.py test_calculator.py --output-format=json > pylint_report.json
 
 
     #Execute tests using the library unittest
