@@ -1,14 +1,10 @@
 name: My Python Workflow
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push]
+
 
 jobs:
   build:
-
     runs-on: windows-latest
     #build runtime limit:FIRST STEP
     timeout-minutes: 15
