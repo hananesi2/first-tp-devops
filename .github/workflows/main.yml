@@ -1,0 +1,66 @@
+name: My Python Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    #build runtime limit:FIRST STEP
+    timeout-minutes: 15
+
+
+    steps:
+    #Install The Programming Language Python
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.11.2
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11.2
+
+    #Install the dependencies to the project
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    #validation of the quality of the code using pylint and generate a report
+    - name: Pylint code validation
+      run: pylint calculator.py test_calculator.py --output-format=json > pylint_report.json
+
+
+    #Execute tests using the library unittest
+    - name: Run tests
+      run: python -m unittest discover
+
+    
+
+
+
+ 
+
+
+
+
+
+#Send notifications to slack about the state of my build
+
+  - name: Send Slack notification
+    if: always()
+    uses: rtCamp/action-slack-notify@v2.3.0
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: '#projet'
+    with:
+      args: |
+      --title "Build ${{ job.status }}" \
+      --fields branch,commit,author,commit_message \
+      
+
+      --commit_url "https://github.com/hananesi2/first-tp-devops/commit/${{ github.sha }}" \
+
+      --color ${{ job.status == 'success' && 'good' || 'danger' }} \
+      --status ${{ job.status }}
