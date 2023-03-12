@@ -34,7 +34,7 @@ jobs:
 
     #Execute tests using the library unittest
     - name: Run tests
-      run: 
+      run: |
         pip install pytest
         python -m pytest
 
