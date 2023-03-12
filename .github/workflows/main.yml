@@ -50,7 +50,7 @@ jobs:
     needs: build
     steps:
       - name: Notify on Slack
-        uses: rtCamp/action-slack-notify@v3.0.0
+        uses: rtCamp/action-slack-notify@v2.2.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: 'projet'
