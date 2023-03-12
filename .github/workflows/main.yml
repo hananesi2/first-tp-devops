@@ -23,6 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install pylint
     #pip install -r requirements.txt
     #validation of the quality of the code using pylint and generate a report
     # - name: Flake8 code validation
@@ -38,6 +39,10 @@ jobs:
         pip install pytest
         python -m pytest
 
+    - name: lint with pylint
+      run: |
+        pylint $(git ls-files '*.py')   
+
   #Send notifications to slack about the state of my build
   slack_notification:
     runs-on: windows-latest
@@ -48,7 +53,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2.3.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_CHANNEL: '#projet'
+          SLACK_CHANNEL: 'projet'
         with:
           args: |
             --title "Build ${{ job.status }}" \
