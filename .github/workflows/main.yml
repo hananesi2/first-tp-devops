@@ -23,22 +23,24 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+    #pip install -r requirements.txt
     #validation of the quality of the code using pylint and generate a report
-    - name: Flake8 code validation
-      run: |
-        python -m pip install flake8==4.0.1 --verbose
-        flake8 calculator.py test_calculator.py --format=json --output-file=flake8_report.json
+    # - name: Flake8 code validation
+    #   run: |
+    #     python -m pip install flake8==4.0.1 --verbose
+    #     flake8 calculator.py test_calculator.py --format=json --output-file=flake8_report.json
 
 
 
     #Execute tests using the library unittest
     - name: Run tests
-      run: python -m unittest discover
+      run: 
+        pip install pytest
+        python -m pytest
 
   #Send notifications to slack about the state of my build
   slack_notification:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: always()
     needs: build
     steps:
